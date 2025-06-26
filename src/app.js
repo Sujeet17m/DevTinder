@@ -4,8 +4,32 @@ const app = express();
 
 
 
-app.use("/hello",(req, res)=> {
-    res.send("helloooo")
+// app.use("/hello",(req, res)=> {
+//     res.send("helloooo")
+// });
+
+app.get("/user",(req,res) => {
+    res.send("get request accepted!")
+});
+
+app.post("/user", (req , res)=> {
+    res.send("saved in db successfully!")
+});
+
+app.patch("/user", (req , res)=> {
+    res.send("patched succesfully")
+});
+
+app.delete("/user", (req , res)=> {
+    res.send("deleted successfully!")
+});
+
+app.options("/user",(req,res)=>{
+    res.send("sended succesfully")
+});
+
+app.head("/user",(req,res)=>{
+    res.send("headed done")
 });
 
 app.use("/test",(req, res)=> {
@@ -17,9 +41,9 @@ app.use("/test",(req, res)=> {
 // });
 
  
-app.use((req, res)=> {
-    res.send("chalo")
-});
+// app.use((req, res)=> {
+//     res.send("chalo")
+// });
 
 app.listen(7777,()=>{
     console.log("listening from server");
