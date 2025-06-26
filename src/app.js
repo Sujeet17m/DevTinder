@@ -8,8 +8,10 @@ const app = express();
 //     res.send("helloooo")
 // });
 
+
+
 app.get("/user",(req,res) => {
-    res.send("get request accepted!")
+    res.send({firstName : "sujeet", lastName : "das"})
 });
 
 app.post("/user", (req , res)=> {
@@ -36,9 +38,9 @@ app.use("/test",(req, res)=> {
     res.send("testing")
 });
 
-// app.use("/",(req, res)=> {
-//     res.send("hii from every router")
-// });
+app.use("/",(req, res)=> {
+    res.send("hii from every router")
+});
 
  
 // app.use((req, res)=> {
