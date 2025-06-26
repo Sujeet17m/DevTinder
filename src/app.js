@@ -4,7 +4,7 @@ const app = express();
 
 
 
-app.use("/helo",(req, res)=> {
+app.use("/hello",(req, res)=> {
     res.send("helloooo")
 });
 
@@ -12,11 +12,16 @@ app.use("/test",(req, res)=> {
     res.send("testing")
 });
 
+// app.use("/",(req, res)=> {
+//     res.send("hii from every router")
+// });
+
+ 
 app.use((req, res)=> {
     res.send("chalo")
 });
 
 app.listen(7777,()=>{
-    console.log("hii");
+    console.log("listening from server");
     
 });
