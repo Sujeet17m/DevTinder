@@ -1,0 +1,1 @@
+need to install nodemon by writing npm i -g nodemon , if you don't want to restart the server after evry minor change and -g here is referring to global
