@@ -8,7 +8,14 @@ const app = express();
 //     res.send("helloooo")
 // });
 
+app.get(/.*fly$/, (req, res) => {
+    res.send({ firstName: "sujeet", lastName: "das" });
+});
 
+app.get("/user/:userId/:name/:password", (req, res) => {
+    console.log(req.params);
+    res.send({ firstName: "sujeet", lastName: "das" });
+});
 
 app.get("/user",(req,res) => {
     res.send({firstName : "sujeet", lastName : "das"})
