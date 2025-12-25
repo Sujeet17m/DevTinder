@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/Sujeet17m/DevTinder#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.2.1"
   }
 }
-
