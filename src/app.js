@@ -80,10 +80,14 @@ app.get("/user/profile", userAuth, (req, res) => {
     }
 });
 
-// app.use("/", (err, req, res, next) => {
-//     console.error("Error encountered:", err.message);
-//     res.status(500).send("Internal Server Error");
-// });
+//this line should be at the end of all routes
+app.use("/", (err, req, res, next) => {
+    if(err){
+        console.error("Error encountered:", err.message);
+        res.status(500).send("Internal Server Error");
+    }
+    
+});
 
 app.listen(7777, () => {
     console.log("Server is running on port 7777");
