@@ -65,6 +65,15 @@ app.get("/user", userAuth, (req, res) => {
     res.send("Welcome User!");
 });
 
+app.get("/user/profile", userAuth, (req, res) => {
+    throw new Error("Simulated error in user profile");
+});
+
+app.use("/", (err, req, res, next) => {
+    console.error("Error encountered:", err.message);
+    res.status(500).send("Internal Server Error");
+});
+
 app.listen(7777, () => {
     console.log("Server is running on port 7777");
 });
