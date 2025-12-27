@@ -1,112 +1,73 @@
 // const express = require("express");
-
 // const app = express();
 
-
-
-// // app.use("/hello",(req, res)=> {
-// //     res.send("helloooo")
-// // });
-
-// // app.get(/.*fly$/, (req, res) => {
-// //     res.send({ firstName: "sujeet", lastName: "das" });
-// // });
-
-// // app.get("/user/:userId/:name/:password", (req, res) => {
-// //     console.log(req.params);
-// //     res.send({ firstName: "sujeet", lastName: "das" });
-// // });
-
-// // app.get("/user",(req,res) => {
-// //     res.send({firstName : "sujeet", lastName : "das"})
-// // });
-
-// // app.post("/user", (req , res)=> {
-// //     res.send("saved in db successfully!")
-// // });
-
-// // app.patch("/user", (req , res)=> {
-// //     res.send("patched succesfully")
-// // });
-
-// // app.delete("/user", (req , res)=> {
-// //     res.send("deleted successfully!")
-// // });
-
-// // app.options("/user",(req,res)=>{
-// //     res.send("sended succesfully")
-// // });
-
-// // app.head("/user",(req,res)=>{
-// //     res.send("headed done")
-// // });
-
-// // app.use("/test",(req, res)=> {
-// //     res.send("testing")
-// // });
-
-// // app.use("/",(req, res)=> {
-// //     res.send("hii from every router")
-// // });
-
-// app.use(
-//     "/user",
-//     (req,res,next) => {
-//         console.log("response 1");
-//         // res.send("handling the route 1");
-//         next();
-//     },
-//     (req,res, next)=>{
-//         console.log("response 2");
-//         // res.send("handling route handler 2");
-//         next();
-//     },
-//     [
-//         (req, res , next) =>{
-//             console.log("response 3");
-//             // res.send("handling response 3");
-//             next();
-//         }
-//     ],
-//     (req,res,next)=>{
-//         console.log("response 4");
-//         res.send("response 4");
-//         // next();
-//     }
-// );
-
- 
-// // app.use((req, res)=> {
-// //     res.send("chalo")
-// // });
-
-// app.listen(7777,()=>{
-//     console.log("listening from server");
-    
+// app.get("/user", (req, res) => {
+//     res.send({ firstName: "sujeet", lastName: "das" });
 // });
 
+// app.post("/user", (req, res) => {
+//     res.send("User created successfully!");
+// });
 
-// module.exports = app;
+// app.put("/user", (req, res) => {
+//     res.send("User updated successfully!");
+// });
+
+// app.delete("/user", (req, res) => {
+//     res.send("User deleted successfully!");
+// });
+
+// app.listen(7777, () => {
+//     console.log("Server is running on port 7777");
+// }); 
+
+// const express = require("express");
+// const app = express();
+
+// app.use("/user",[(req,res,next) => {
+//     console.log("handling req 1");
+//     next();
+// },
+// (req,res,next) => {
+//     console.log("handling req 2");
+//     next();
+// }],
+// [(req,res) => {
+//     console.log("handling req 3");
+//     res.send("User route");
+// }]);
+
+// app.listen(7777, () => {
+//     console.log("Server is running on port 7777");
+// });
 
 const express = require("express");
+
 const app = express();
 
-app.get("/user", (req, res) => {
-    res.send({ firstName: "sujeet", lastName: "das" });
+const { adminAuth} = require("./middlewares/auth");
+const { userAuth } = require("./middlewares/auth");
+
+
+app.use("/admin", adminAuth, (req, res) => {
+    res.send("Welcome Admin!");
 });
 
-app.post("/user", (req, res) => {
-    res.send("User created successfully!");
+app.get("/admin/dashboard", adminAuth, (req, res) => {
+    res.send("Admin Dashboard");
 });
 
-app.put("/user", (req, res) => {
-    res.send("User updated successfully!");
+app.get("/admin/settings", adminAuth, (req, res) => {
+    res.send("Admin Settings");
 });
 
-app.delete("/user", (req, res) => {
-    res.send("User deleted successfully!");
+app.get("/user", userAuth, (req, res) => {
+    res.send("Welcome User!");
 });
 
 app.listen(7777, () => {
     console.log("Server is running on port 7777");
-}); 
+});
+
+
+
