@@ -66,15 +66,24 @@ app.get("/user", userAuth, (req, res) => {
 });
 
 //error handling middleware
-
+//error handling using try catch
 app.get("/user/profile", userAuth, (req, res) => {
-    throw new Error("Simulated error in user profile");
+    try{
+        // Simulate some operation that throws an error
+        // res.send("User Profile");
+        throw new Error("Simulated error in user profile");
+    } catch (err) {
+        console.error("Error encountered:", err.message);
+        res.status(500).send("Internal Server Error");
+        
+
+    }
 });
 
-app.use("/", (err, req, res, next) => {
-    console.error("Error encountered:", err.message);
-    res.status(500).send("Internal Server Error");
-});
+// app.use("/", (err, req, res, next) => {
+//     console.error("Error encountered:", err.message);
+//     res.status(500).send("Internal Server Error");
+// });
 
 app.listen(7777, () => {
     console.log("Server is running on port 7777");
