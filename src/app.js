@@ -65,6 +65,8 @@ app.get("/user", userAuth, (req, res) => {
     res.send("Welcome User!");
 });
 
+//error handling middleware
+
 app.get("/user/profile", userAuth, (req, res) => {
     throw new Error("Simulated error in user profile");
 });
