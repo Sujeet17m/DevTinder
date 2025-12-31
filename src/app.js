@@ -41,57 +41,71 @@
 //     console.log("Server is running on port 7777");
 // });
 
+// //middleware for admin authentication
+// const express = require("express");
+
+// const app = express();
+
+// const { adminAuth} = require("./middlewares/auth");
+// const { userAuth } = require("./middlewares/auth");
+
+
+// app.use("/admin", adminAuth, (req, res) => {
+//     res.send("Welcome Admin!");
+// });
+
+// app.get("/admin/dashboard", adminAuth, (req, res) => {
+//     res.send("Admin Dashboard");
+// });
+
+// app.get("/admin/settings", adminAuth, (req, res) => {
+//     res.send("Admin Settings");
+// });
+
+// app.get("/user", userAuth, (req, res) => {
+//     res.send("Welcome User!");
+// });
+
+// //error handling middleware
+// //error handling using try catch
+// app.get("/user/profile", userAuth, (req, res) => {
+//     try{
+//         // Simulate some operation that throws an error
+//         // res.send("User Profile");
+//         throw new Error("Simulated error in user profile");
+//     } catch (err) {
+//         console.error("Error encountered:", err.message);
+//         res.status(500).send("Internal Server Error");
+        
+
+//     }
+// });
+
+// //this line should be at the end of all routes
+// app.use("/", (err, req, res, next) => {
+//     if(err){
+//         console.error("Error encountered:", err.message);
+//         res.status(500).send("Internal Server Error");
+//     }
+    
+// });
+
+// app.listen(7777, () => {
+//     console.log("Server is running on port 7777");
+// });
+
 const express = require("express");
+const connectDB = require("./config/database");
 
 const app = express();
 
-const { adminAuth} = require("./middlewares/auth");
-const { userAuth } = require("./middlewares/auth");
-
-
-app.use("/admin", adminAuth, (req, res) => {
-    res.send("Welcome Admin!");
-});
-
-app.get("/admin/dashboard", adminAuth, (req, res) => {
-    res.send("Admin Dashboard");
-});
-
-app.get("/admin/settings", adminAuth, (req, res) => {
-    res.send("Admin Settings");
-});
-
-app.get("/user", userAuth, (req, res) => {
-    res.send("Welcome User!");
-});
-
-//error handling middleware
-//error handling using try catch
-app.get("/user/profile", userAuth, (req, res) => {
-    try{
-        // Simulate some operation that throws an error
-        // res.send("User Profile");
-        throw new Error("Simulated error in user profile");
-    } catch (err) {
-        console.error("Error encountered:", err.message);
-        res.status(500).send("Internal Server Error");
-        
-
-    }
-});
-
-//this line should be at the end of all routes
-app.use("/", (err, req, res, next) => {
-    if(err){
-        console.error("Error encountered:", err.message);
-        res.status(500).send("Internal Server Error");
-    }
-    
-});
-
-app.listen(7777, () => {
-    console.log("Server is running on port 7777");
-});
-
-
-
+connectDB()
+  .then(() => {
+    console.log("Database connection established...");
+    app.listen(7777, () => {
+      console.log("Server is running on port 7777");
+    });
+  })
+  .catch((err) => {
+    console.error("Database cannot be connected", err);
+  });
