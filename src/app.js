@@ -100,11 +100,13 @@ const User = require("./models/user");
 
 const app = express();
 
+app.use(express.json());
+
 app.post("/signup", async (req, res) => {
   const user = new User({
-    name: "A B Devilliers",
-    email: "ABD@gmail.com",
-    password: "secret123"
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password
   });
 
   try {
