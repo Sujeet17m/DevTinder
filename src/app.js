@@ -96,8 +96,25 @@
 
 const express = require("express");
 const connectDB = require("./config/database");
+const User = require("./models/user");
 
 const app = express();
+
+app.post("/signup", async (req, res) => {
+  const user = new User({
+    name: "A B Devilliers",
+    email: "ABD@gmail.com",
+    password: "secret123"
+  });
+
+  try {
+    await user.save();
+    res.status(201).send("User registered successfully");
+  } catch (err) {
+    res.status(500).send("Error registering user: " + err.message);
+  }
+});
+
 
 connectDB()
   .then(() => {
