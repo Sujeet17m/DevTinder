@@ -102,6 +102,8 @@ const app = express();
 
 app.use(express.json());
 
+
+
 // User registration route dynamic implementation
 app.post("/signup", async (req, res) => {
   const user = new User({
@@ -118,6 +120,20 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// app.get("/user" , async (req, res) => {
+//   const email = req.body.email;
+//   try {
+//     const user = await User.findOne({ email: email });
+//     if (!user) {
+//       res.status(404).send("User not found"); 
+//     } else {
+//       res.status(200).json(user);
+//     }
+//   } catch (err) {
+//     res.status(500).send("Error fetching user: " + err.message);
+//   }
+// });
+
 app.get("/feed", async (req, res) => {
   try {
     const users = await User.find({});
@@ -127,6 +143,77 @@ app.get("/feed", async (req, res) => {
   }
 });
 
+app.delete("/user", async (req, res)=>{
+  const userId = req.body._id;
+  try {
+    const user = await User.findByIdAndDelete(userId);
+    if(!user){
+      res.status(404).send("User not found");
+    } else {
+      res.status(200).send("User deleted successfully");
+    }
+    res.status(200).send("User deleted successfully");
+  } catch (err) {
+    res.status(500).send("Error deleting user: " + err.message);
+  } 
+});
+
+// app.patch("/user", async (req, res) => {
+//   const { _id, ...updatedData } = req.body;
+
+//   try {
+//     const user = await User.findByIdAndUpdate(
+//       _id,
+//       updatedData,
+//       {
+//         new: true,
+//         runValidators: true
+//       }
+//     );
+
+//     if (!user) {
+//       return res.status(404).send("User not found");
+//     }
+
+//     res.status(200).json(user);
+//   } catch (err) {
+//     res.status(400).send(err.message);
+//   }
+// });
+
+app.patch("/user", async (req, res) => {
+  const userId = req.body.userId;
+  const updatedData = req.body;
+  try {
+    const user = await User.findByIdAndUpdate( userId , updatedData, { new: true, runValidators: true });
+    console.log(user);
+    res.status(200).send("User updated successfully");
+
+    
+  } catch (err) {
+    res.status(500).send("Error updating user: " + err.message);
+  }
+});
+
+
+
+
+app.delete("/feed", async (req, res)=>{
+  try {
+    const result = await User.deleteOne({_id: req.body._id});
+    if(result.length === 0){
+      res.status(404).send("User not found");
+    } else {
+      // res.status(200).send("User deleted successfully");
+      //to avoid duplicate response error
+      return res.status(200).send("User deleted successfully");
+
+    }
+  } catch (err) {
+    res.status(500).send("Error deleting user: " + err.message);
+  }
+});
+  
 
 connectDB()
   .then(() => {
