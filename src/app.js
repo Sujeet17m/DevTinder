@@ -102,6 +102,7 @@ const app = express();
 
 app.use(express.json());
 
+// User registration route dynamic implementation
 app.post("/signup", async (req, res) => {
   const user = new User({
     name: req.body.name,
@@ -114,6 +115,15 @@ app.post("/signup", async (req, res) => {
     res.status(201).send("User registered successfully");
   } catch (err) {
     res.status(500).send("Error registering user: " + err.message);
+  }
+});
+
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).send("Error fetching users: " + err.message);
   }
 });
 
