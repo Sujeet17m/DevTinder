@@ -97,6 +97,8 @@
 const express = require("express");
 const connectDB = require("./config/database");
 const User = require("./models/user");
+const bcrypt = require("bcryptjs");
+const validator = require("validator");
 
 const app = express();
 
@@ -118,6 +120,28 @@ app.post("/signup", async (req, res) => {
   } catch (err) {
     res.status(500).send("Error registering user: " + err.message);
   }
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    const {email, password} = req.body;
+
+    const user = await User.findOne({email: email});
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if(isPasswordValid) {
+      res.status(200).send("Login successful");
+    } else {
+      res.status(401).send("Invalid password");
+    }
+  }
+  catch (err) {
+    res.status(500).send("Error logging in: " + err.message);
+  }
+  
 });
 
 // app.get("/user" , async (req, res) => {
