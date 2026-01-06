@@ -122,6 +122,8 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+
+
 app.post("/login", async (req, res) => {
   try {
     const {email, password} = req.body;
@@ -164,6 +166,18 @@ app.get("/feed", async (req, res) => {
     res.status(200).json(users);
   } catch (err) {
     res.status(500).send("Error fetching users: " + err.message);
+  }
+});
+
+app.get("/set-cookie", async (req, res) => {
+  try {
+    res.cookie("dummycookie", "sujeet-history")
+
+    res.status(200).send("Cookie received: " + cookie);
+    
+  } catch (error) {
+    
+    res.status(500).send("Error fetching cookie: " + error.message);
   }
 });
 
