@@ -6,6 +6,6 @@ const authRouter = express.Router();
 authRouter.post('/login' ,usetAuth, (req, res) => {
     res.send("User login endpoint");
 
-})
+});
 
 module.exports = authRouter;
