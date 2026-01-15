@@ -1,3 +1,1 @@
-A Node.js course 
-
-Do homework regularly
+Backend project 
