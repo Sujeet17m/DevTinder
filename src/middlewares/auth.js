@@ -1,6 +1,7 @@
 const adminAuth = (req, res, next) => {
     console.log("Admin authentication middleware");
     // Simulate admin check
+
     const token = "xyzadmin";
     const isAdmin = token === "xyzadmin";
     if (!isAdmin) {
